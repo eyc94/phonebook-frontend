@@ -32,7 +32,17 @@ const App = () => {
           setPersons(persons.concat(returnedPerson));
         });
     } else {
-      alert(`${newName} is already added to the phonebook!`);
+      const updateMessage = `${newName} is already added to the phonebook. Would you like to replace the old number?`;
+      if (window.confirm(updateMessage)) {
+        const person = persons.find(p => p.name.toLowerCase() === newName.toLowerCase());
+        const changedPerson = { ...person, number: newNumber };
+
+        personService
+          .update(person.id, changedPerson)
+          .then(returnedPerson => {
+            setPersons(persons.map(p => p.name.toLowerCase() !== newName.toLowerCase() ? p : returnedPerson));
+          });
+      }
     }
     setNewName('');
     setNewNumber('');
