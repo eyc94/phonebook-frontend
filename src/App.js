@@ -38,6 +38,17 @@ const App = () => {
     setNewNumber('');
   };
 
+  const deletePerson = (id, name) => {
+    const deleteMessage = `Delete ${name}?`;
+    if (window.confirm(deleteMessage)) {
+      personService
+        .del(id)
+        .then(returnedPerson => {
+          setPersons(persons.filter(p => p.id !== id));
+        });
+    }
+  };
+
   const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -61,7 +72,7 @@ const App = () => {
       <h2>Add New</h2>
       <PersonForm onSubmit={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <Persons personsToShow={personsToShow} />
+      <Persons deletePerson={deletePerson} personsToShow={personsToShow} />
     </div>
   );
 };
