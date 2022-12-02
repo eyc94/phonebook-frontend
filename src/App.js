@@ -37,6 +37,12 @@ const App = () => {
           setTimeout(() => {
             setSuccessMessage(null);
           }, 5000);
+        })
+        .catch(error => {
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
         });
     } else {
       const updateMessage = `${newName} is already added to the phonebook. Would you like to replace the old number?`;
